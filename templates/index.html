@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Test Socket</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+</head>
+<body>
+    <script>
+        const socket = io.connect('http://localhost:44411/test');
+        socket.on('connect', () => {
+            socket.emit('myevent', {'data': 'client ok'});
+        });
+
+        socket.on('myevent', (data) => {
+            alert(data.data)
+        });
+    </script>
+</body>
+</html>
