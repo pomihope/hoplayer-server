@@ -7,13 +7,11 @@
 </head>
 <body>
     <script>
-        const socket = io.connect('http://localhost:44411/test');
-        socket.on('connect', () => {
-            socket.emit('myevent', {'data': 'client ok'});
-        });
-
+        const socket = io.connect('http://localhost:44411/test')
         socket.on('myevent', (data) => {
-            alert(data.data)
+            console.log("==========================================")
+            console.log("received: " + data.data)
+            console.log("==========================================")
         });
     </script>
 </body>
