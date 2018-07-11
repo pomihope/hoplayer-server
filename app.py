@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import Flask, render_template
+from flask import Flask, redirect, render_template
 from flask_socketio import SocketIO, send, emit
 
 # 宣告 Flask 實體並載入設定
@@ -12,21 +12,25 @@ socket = SocketIO(app)
 
 @app.route('/')
 def index_page():
-    return render_template('index.html')
+    return redirect('/test')
 
-@socket.on('myevent', namespace='/test')
-def handle_my_custom_event(data):
+@app.route('/test')
+def test_page():
+    return render_template('test.html')
+
+@socket.on('test')
+def test_handler(data):
     print('==========================================')
     print('received: ' + data['data'])
     print('==========================================')
-    emit('myevent', {'data': 'server ok'})
+    emit('test', data)
 
-@socket.on('connect', namespace='/test')
-def test_connect():
+@socket.on('connect')
+def connect_handler():
     print("Connected!")
 
-@socket.on('disconnect', namespace='/test')
-def test_disconnect():
+@socket.on('disconnect')
+def disconnect_handler():
     print('Disconnected!')
 
 def main():
