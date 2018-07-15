@@ -3,6 +3,8 @@
 from flask import Flask, redirect, render_template
 from flask_socketio import SocketIO, send, emit
 
+import time
+
 # 宣告 Flask 實體並載入設定
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_pyfile('config.py')
@@ -18,12 +20,19 @@ def index_page():
 def test_page():
     return render_template('test.html')
 
+def test_time():
+    print('==========================================')
+    print('ack')
+    print('==========================================')
+    print(time.time())
+
 @socket.on('test')
 def test_handler(data):
     print('==========================================')
     print('received: ' + data['data'])
     print('==========================================')
-    emit('test', data)
+    print(time.time())
+    emit('test', data, callback=test_time)
 
 @socket.on('connect')
 def connect_handler():

@@ -8,10 +8,11 @@
 <body>
     <script>
         const socket = io.connect('http://localhost:44411/')
-        socket.on('test', (data) => {
+        socket.on('test', (data, ack) => {
             console.log("==========================================")
             console.log("received: " + data.data)
             console.log("==========================================")
+            ack()
         });
     </script>
 </body>
